@@ -1,0 +1,79 @@
+#! /bin/python3
+##
+## EPITECH PROJECT, 2019
+## 102architect_2019
+## File description:
+## 102architect
+##
+
+import sys
+from translation import translation
+from scaling import scaling
+from rotation import rotation
+from reflecting import reflecting
+
+TREATEMENT = {
+    "t": translation,
+    "z": scaling,
+    "r": rotation,
+    "s": reflecting
+}
+
+def print_usage():
+    print("USAGE")
+    print("\t./102architect x y transfo1 arg11 [arg12] [transfo2 arg12 [arg22]] ...")
+    print()
+    print("DESCRIPTION")
+    print("\tx  abscissa of the original point")
+    print("\ty  ordinate of the original point")
+    print()
+    print("\ttransfo arg1 [arg2]")
+    print("\t-t i j translation along vector (i, j)")
+    print("\t-z m n scaling by factors m (x-axis) and n (y-axis)")
+    print("\t-r d   rotation centered in O by a d degree angle")
+    print("\t-s d   reflection over the axis passing through O with an inclination")
+    print("\t       angle of d degrees")
+
+
+def check_coord(x, y):
+    try:
+        x = int(x)
+        y = int(y)
+    except ValueError:
+        exit(84)
+    return (x, y)
+
+def get_flags(argc, argv):
+    flags = list()
+    flags_list = ['t', 'z', 'r', 's']
+    args_required = {"-t": 2, "-z": 2, "-r": 1, "-s": 1}
+    for i in range(1, argc):
+        if argv[i].isdecimal():
+            continue
+        if (argv[i][0] != "-") or (argv[i][1:] not in flags_list):
+            continue
+        flags.append((argv[i][1:], list()))
+        try:
+            for j in range(args_required[argv[i]]):
+                flags[-1][1].append(int(argv[i + 1 + j]))
+        except IndexError:
+            exit(84)
+        except ValueError:
+            exit(84)
+    return flags
+
+def main(argc, argv):
+    if (argc < 3) or (argc >= 2 and argv[1] == "-h"):
+        print_usage()
+        exit(84)
+    x, y = check_coord(argv[1], argv[2])
+    flags = get_flags(argc, argv)
+    for flag, args in flags:
+        x, y = TREATEMENT[flag](x, y, *args)
+    x = round(x, 2)
+    y = round(y, 2)
+    print(f"({float(argv[1]):.2f}, {float(argv[2]):.2f}) => ({x:.2f}, {y:.2f})")
+    exit(0)
+
+if __name__ == "__main__":
+    main(len(sys.argv), sys.argv)
