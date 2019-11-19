@@ -1,4 +1,5 @@
 #! /bin/python3
+# -*- coding:Utf-8 -*
 ##
 ## EPITECH PROJECT, 2019
 ## 102architect_2019
@@ -7,6 +8,7 @@
 ##
 
 import sys
+from matrice import Matrice
 from translation import translation
 from scaling import scaling
 from rotation import rotation
@@ -34,7 +36,6 @@ def print_usage():
     print("\t-s d   reflection over the axis passing through O with an inclination")
     print("\t       angle of d degrees")
 
-
 def check_coord(x, y):
     try:
         x = int(x)
@@ -43,16 +44,22 @@ def check_coord(x, y):
         exit(84)
     return (x, y)
 
+def init_matrice():
+    m = Matrice(3, 3)
+    m[0, 0] = 1
+    m[1, 1] = 1
+    m[2, 2] = 1
+    return m
+
 def get_flags(argc, argv):
     flags = list()
     flags_list = ['t', 'z', 'r', 's']
     args_required = {"-t": 2, "-z": 2, "-r": 1, "-s": 1}
-    for i in range(1, argc):
-        if argv[i].isdecimal():
-            continue
+    i = 0
+    while (i < argc):
         if (argv[i][0] != "-") or (argv[i][1:] not in flags_list):
-            continue
-        flags.append((argv[i][1:], list()))
+            exit(84)
+        flags.append((argv[i][1], list()))
         try:
             for j in range(args_required[argv[i]]):
                 flags[-1][1].append(int(argv[i + 1 + j]))
@@ -60,18 +67,23 @@ def get_flags(argc, argv):
             exit(84)
         except ValueError:
             exit(84)
+        i += args_required[argv[i]] + 1
     return flags
 
 def main(argc, argv):
     if (argc < 3) or (argc >= 2 and argv[1] == "-h"):
         print_usage()
         exit(84)
+    mat = init_matrice()
     x, y = check_coord(argv[1], argv[2])
-    flags = get_flags(argc, argv)
+    flags = get_flags(argc - 3, argv[3:])
     for flag, args in flags:
         x, y = TREATEMENT[flag](x, y, *args)
     x = round(x, 2)
     y = round(y, 2)
+    for i in range(3):
+        for j in range(3):
+            print(f"{round(mat[i, j], 2):.2f}", end="\t" if j < 2 else "\n")
     print(f"({float(argv[1]):.2f}, {float(argv[2]):.2f}) => ({x:.2f}, {y:.2f})")
     exit(0)
 

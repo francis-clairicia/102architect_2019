@@ -1,3 +1,4 @@
+# -*- coding:Utf-8 -*
 ##
 ## EPITECH PROJECT, 2019
 ## 102architect_2019
