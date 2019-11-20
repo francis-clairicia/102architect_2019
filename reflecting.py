@@ -7,21 +7,15 @@
 ##
 
 import math
+from matrix import unit_matrix
 from get_real_angle import get_real_angle
 
-def reflecting(x, y, d):
+def reflecting(mat, d):
     print(f"Reflection over an axis with an inclination angle of {d} degrees")
     d = math.radians(get_real_angle(d))
-    radius = math.sqrt(math.pow(x, 2) + math.pow(y, 2))
-    if (y >= 0):
-        alpha_angle = math.asin(y / radius)
-    else:
-        alpha_angle = math.asin(y / radius) + (2 * math.pi)
-    if (d - math.pi >= alpha_angle):
-        d -= math.pi
-    angle = 2 * d - alpha_angle
-    x = math.cos(angle) * radius
-    y = math.sin(angle) * radius
-    x = 0 if x == 0 else x
-    y = 0 if y == 0 else y
-    return (x, y)
+    matrix_modif = unit_matrix(3)
+    matrix_modif[1, 1] = math.cos(2 * d) if d != 0 else 1
+    matrix_modif[1, 2] = math.sin(2 * d)
+    matrix_modif[2, 1] = math.sin(2 * d)
+    matrix_modif[2, 2] = -math.cos(2 * d) if d != 0 else 1
+    return matrix_modif * mat

@@ -6,6 +6,11 @@
 ## scaling.py
 ##
 
-def scaling(x, y, m, n):
+from matrix import unit_matrix
+
+def scaling(mat, m, n):
     print(f"Scaling by factor {m} and {n}")
-    return (x * m, y * n)
+    matrix_modif = unit_matrix(3)
+    matrix_modif[1, 1] = m
+    matrix_modif[2, 2] = n
+    return matrix_modif * mat

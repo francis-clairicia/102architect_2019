@@ -8,17 +8,17 @@
 ##
 
 import sys
-from matrice import Matrice
+from matrix import *
 from translation import translation
 from scaling import scaling
 from rotation import rotation
 from reflecting import reflecting
 
 TREATEMENT = {
-    "t": translation,
-    "z": scaling,
-    "r": rotation,
-    "s": reflecting
+    "-t": translation,
+    "-z": scaling,
+    "-r": rotation,
+    "-s": reflecting
 }
 
 def print_usage():
@@ -44,13 +44,6 @@ def check_coord(x, y):
         exit(84)
     return (x, y)
 
-def init_matrice():
-    m = Matrice(3, 3)
-    m[0, 0] = 1
-    m[1, 1] = 1
-    m[2, 2] = 1
-    return m
-
 def get_flags(argc, argv):
     flags = list()
     flags_list = ['t', 'z', 'r', 's']
@@ -59,7 +52,7 @@ def get_flags(argc, argv):
     while (i < argc):
         if (argv[i][0] != "-") or (argv[i][1:] not in flags_list):
             exit(84)
-        flags.append((argv[i][1], list()))
+        flags.append((argv[i], list()))
         try:
             for j in range(args_required[argv[i]]):
                 flags[-1][1].append(int(argv[i + 1 + j]))
@@ -74,16 +67,19 @@ def main(argc, argv):
     if (argc < 3) or (argc >= 2 and argv[1] == "-h"):
         print_usage()
         exit(84)
-    mat = init_matrice()
+    mat = unit_matrix(3)
     x, y = check_coord(argv[1], argv[2])
+    dot = Matrix(3, 1)
+    dot[1, 1] = x
+    dot[2, 1] = y
+    dot[3, 1] = 1
     flags = get_flags(argc - 3, argv[3:])
     for flag, args in flags:
-        x, y = TREATEMENT[flag](x, y, *args)
-    x = round(x, 2)
-    y = round(y, 2)
-    for i in range(3):
-        for j in range(3):
-            print(f"{round(mat[i, j], 2):.2f}", end="\t" if j < 2 else "\n")
+        mat = TREATEMENT[flag](mat, *args)
+    dot = mat * dot
+    x = round(dot[1, 1], 2)
+    y = round(dot[2, 1], 2)
+    print(mat)
     print(f"({float(argv[1]):.2f}, {float(argv[2]):.2f}) => ({x:.2f}, {y:.2f})")
     exit(0)
 

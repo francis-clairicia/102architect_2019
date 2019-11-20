@@ -8,16 +8,14 @@
 
 import math
 from get_real_angle import get_real_angle
+from matrix import unit_matrix
 
-def rotation(x, y, d):
+def rotation(mat, d):
     print(f"Rotation by a {d} degree angle")
-    d = get_real_angle(d)
-    radius = math.sqrt(math.pow(x, 2) + math.pow(y, 2))
-    angle = math.asin(y / radius)
-    angle += 2 * math.pi if angle < 0 else 0
-    angle += math.radians(d)
-    x = math.cos(angle) * radius
-    y = math.sin(angle) * radius
-    x = 0 if x == 0 else x
-    y = 0 if y == 0 else y
-    return (x, y)
+    d = math.radians(get_real_angle(d))
+    matrix_modif = unit_matrix(3)
+    matrix_modif[1, 1] = math.cos(d)
+    matrix_modif[1, 2] = -math.sin(d)
+    matrix_modif[2, 1] = math.sin(d)
+    matrix_modif[2, 2] = math.cos(d)
+    return matrix_modif * mat
