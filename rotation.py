@@ -11,12 +11,10 @@ from matrix import Matrix
 
 def rotation(mat, d):
     print(f"Rotation by a {d} degree angle")
-    d %= 360
-    alpha = radians(d)
+    d = radians(d % 360)
     matrix_modified = Matrix.unit(3)
-    matrix_modified[1, 1] = cos(alpha)
-    matrix_modified[1, 2] = -sin(alpha)
-    matrix_modified[2, 1] = sin(alpha)
-    matrix_modified[2, 2] = cos(alpha)
-    matrix_modified *= mat
-    return matrix_modified
+    matrix_modified[1, 1] = cos(d)
+    matrix_modified[1, 2] = -sin(d)
+    matrix_modified[2, 1] = sin(d)
+    matrix_modified[2, 2] = cos(d)
+    return matrix_modified * mat

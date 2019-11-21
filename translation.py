@@ -12,5 +12,4 @@ def translation(mat, i, j):
     matrix_modified = Matrix.unit(3)
     matrix_modified[1, 3] = i
     matrix_modified[2, 3] = j
-    matrix_modified *= mat
-    return matrix_modified
+    return matrix_modified * mat

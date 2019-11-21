@@ -13,5 +13,4 @@ def scaling(mat, m, n):
     matrix_modified = Matrix.unit(3)
     matrix_modified[1, 1] = m
     matrix_modified[2, 2] = n
-    matrix_modified *= mat
-    return matrix_modified
+    return matrix_modified * mat
