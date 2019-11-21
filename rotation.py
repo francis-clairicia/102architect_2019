@@ -6,16 +6,17 @@
 ## rotation.py
 ##
 
-import math
-from get_real_angle import get_real_angle
-from matrix import unit_matrix
+from math import cos, sin, radians
+from matrix import Matrix
 
 def rotation(mat, d):
     print(f"Rotation by a {d} degree angle")
-    d = math.radians(get_real_angle(d))
-    matrix_modif = unit_matrix(3)
-    matrix_modif[1, 1] = math.cos(d)
-    matrix_modif[1, 2] = -math.sin(d)
-    matrix_modif[2, 1] = math.sin(d)
-    matrix_modif[2, 2] = math.cos(d)
-    return matrix_modif * mat
+    d %= 360
+    alpha = radians(d)
+    matrix_modified = Matrix.unit(3)
+    matrix_modified[1, 1] = cos(alpha)
+    matrix_modified[1, 2] = -sin(alpha)
+    matrix_modified[2, 1] = sin(alpha)
+    matrix_modified[2, 2] = cos(alpha)
+    matrix_modified *= mat
+    return matrix_modified

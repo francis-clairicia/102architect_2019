@@ -5,11 +5,12 @@
 ## translation.py
 ##
 
-from matrix import unit_matrix
+from matrix import Matrix
 
 def translation(mat, i, j):
     print(f"Translation along vector ({i}, {j})")
-    matrix_modif = unit_matrix(3)
-    matrix_modif[1, 3] = i
-    matrix_modif[2, 3] = j
-    return matrix_modif * mat
+    matrix_modified = Matrix.unit(3)
+    matrix_modified[1, 3] = i
+    matrix_modified[2, 3] = j
+    matrix_modified *= mat
+    return matrix_modified

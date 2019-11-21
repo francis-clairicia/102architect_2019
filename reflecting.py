@@ -6,16 +6,17 @@
 ## reflecting.py
 ##
 
-import math
-from matrix import unit_matrix
-from get_real_angle import get_real_angle
+from math import cos, sin, radians
+from matrix import Matrix
 
 def reflecting(mat, d):
     print(f"Reflection over an axis with an inclination angle of {d} degrees")
-    d = math.radians(get_real_angle(d))
-    matrix_modif = unit_matrix(3)
-    matrix_modif[1, 1] = math.cos(2 * d) if d != 0 else 1
-    matrix_modif[1, 2] = math.sin(2 * d)
-    matrix_modif[2, 1] = math.sin(2 * d)
-    matrix_modif[2, 2] = -math.cos(2 * d) if d != 0 else 1
-    return matrix_modif * mat
+    d %= 360
+    alpha = radians(d)
+    matrix_modified = Matrix.unit(3)
+    matrix_modified[1, 1] = cos(2 * alpha) if d != 0 else 1
+    matrix_modified[1, 2] = sin(2 * alpha)
+    matrix_modified[2, 1] = sin(2 * alpha)
+    matrix_modified[2, 2] = -cos(2 * alpha) if d != 0 else 1
+    matrix_modified *= mat
+    return matrix_modified
