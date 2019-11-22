@@ -46,7 +46,10 @@ class Matrix(object):
 	def __repr__(self):
 		matrix_str = ""
 		for i, j in self.mat.keys():
-			matrix_str += f"{round(self.mat[i, j], 2):.2f}"
+			value = round(self.mat[i, j], 2)
+			if (value == 0):
+				value = 0
+			matrix_str += f"{value:.2f}"
 			matrix_str += "\t" if (j < self.columns) else "\n"
 		return matrix_str[:-1]
 		

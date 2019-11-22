@@ -11,7 +11,7 @@ from matrix import Matrix
 
 def rotation(mat, d):
     print(f"Rotation by a {d} degree angle")
-    d = radians(d % 360)
+    d = radians(d)
     matrix_transformation = Matrix.unit(3)
     matrix_transformation[1, 1] = cos(d)
     matrix_transformation[1, 2] = -sin(d)

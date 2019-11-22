@@ -11,7 +11,7 @@ from matrix import Matrix
 
 def reflecting(mat, d):
     print(f"Reflection over an axis with an inclination angle of {d} degrees")
-    d = radians(d % 360)
+    d = radians(d)
     matrix_transformation = Matrix.unit(3)
     matrix_transformation[1, 1] = cos(2 * d) if d != 0 else 1
     matrix_transformation[1, 2] = sin(2 * d)
