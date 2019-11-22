@@ -9,7 +9,7 @@ from matrix import Matrix
 
 def translation(mat, i, j):
     print(f"Translation along vector ({i}, {j})")
-    matrix_modified = Matrix.unit(3)
-    matrix_modified[1, 3] = i
-    matrix_modified[2, 3] = j
-    return matrix_modified * mat
+    matrix_transformation = Matrix.unit(3)
+    matrix_transformation[1, 3] = i
+    matrix_transformation[2, 3] = j
+    return matrix_transformation * mat

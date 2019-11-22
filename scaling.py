@@ -10,7 +10,7 @@ from matrix import Matrix
 
 def scaling(mat, m, n):
     print(f"Scaling by factor {m} and {n}")
-    matrix_modified = Matrix.unit(3)
-    matrix_modified[1, 1] = m
-    matrix_modified[2, 2] = n
-    return matrix_modified * mat
+    matrix_transformation = Matrix.unit(3)
+    matrix_transformation[1, 1] = m
+    matrix_transformation[2, 2] = n
+    return matrix_transformation * mat
