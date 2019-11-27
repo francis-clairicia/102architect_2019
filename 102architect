@@ -74,7 +74,9 @@ def main(argc, argv):
         mat = TREATEMENT[flag](mat, *args)
     point = mat * point
     new_x = round(point[1, 1], 2)
+    new_x = 0 if new_x == 0 else new_x
     new_y = round(point[2, 1], 2)
+    new_y = 0 if new_y == 0 else new_y
     print(mat)
     print(f"({x:.2f}, {y:.2f}) => ({new_x:.2f}, {new_y:.2f})")
     exit(0)
