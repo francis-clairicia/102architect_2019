@@ -66,7 +66,7 @@ def main(argc, argv):
     if (argc < 4) or (argc >= 2 and argv[1] == "-h"):
         print_usage()
         exit(84)
-    mat = Matrix.unit(3)
+    mat = Matrix.identity(3)
     x, y = check_coord(argv[1], argv[2])
     point = Matrix.from_2d_list([[x], [y], [1]])
     flags = get_flags(argc - 3, argv[3:])
