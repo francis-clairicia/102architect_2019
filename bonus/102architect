@@ -1,0 +1,66 @@
+#! /bin/python3
+# -*- coding:Utf-8 -*
+##
+## EPITECH PROJECT, 2019
+## 102architect_2019
+## File description:
+## 102architect
+##
+
+import sys
+from matrix import Matrix
+from show_transformation import show_transformation
+
+def print_usage():
+    print("USAGE")
+    print("\t./102architect x y transfo1 arg11 [arg12] [transfo2 arg21 [arg22]] ...")
+    print()
+    print("DESCRIPTION")
+    print("\tx  abscissa of the original point")
+    print("\ty  ordinate of the original point")
+    print()
+    print("\ttransfo arg1 [arg2]")
+    print("\t-t i j translation along vector (i, j)")
+    print("\t-z m n scaling by factors m (x-axis) and n (y-axis)")
+    print("\t-r d   rotation centered in O by a d degree angle")
+    print("\t-s d   reflection over the axis passing through O with an inclination")
+    print("\t       angle of d degrees")
+
+def check_coord(x, y):
+    try:
+        x = int(x)
+        y = int(y)
+    except ValueError:
+        exit(84)
+    return (x, y)
+
+def get_flags(argc, argv):
+    flags = list()
+    flags_list = {"-t": 2, "-z": 2, "-r": 1, "-s": 1}
+    i = 0
+    while i < argc:
+        if argv[i] not in flags_list:
+            exit(84)
+        flags.append((argv[i], list()))
+        try:
+            for j in range(flags_list[argv[i]]):
+                flags[-1][1].append(int(argv[i + 1 + j]))
+        except IndexError:
+            exit(84)
+        except ValueError:
+            exit(84)
+        i += flags_list[argv[i]] + 1
+    return flags
+
+def main(argc, argv):
+    if (argc < 4) or (argc >= 2 and argv[1] == "-h"):
+        print_usage()
+        exit(84)
+    x, y = check_coord(argv[1], argv[2])
+    point = Matrix.from_2d_list([[x], [y], [1]])
+    flags = get_flags(argc - 3, argv[3:])
+    show_transformation(point, flags)
+    exit(0)
+
+if __name__ == "__main__":
+    main(len(sys.argv), sys.argv)
